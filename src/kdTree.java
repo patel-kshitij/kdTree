@@ -62,15 +62,10 @@ class kdTree implements Searchable, TreeDebug {
                 if (compareToResponse == 0) {
                     /*
                     Both the dimensions are equal.
-                    If both the points are same then returns false otherwise move to the left child node.
+                    If both the points are same then returns false.
                      */
-                    if (point.equals(currentNode.point)) { // TODO: Confirm if .equal breaks the not using Collections constraint.
-                        result = false;
-                        break;
-                    }
-                    parentNode = currentNode;
-                    currentNode = parentNode.left;
-                    left = true;
+                    result = false;
+                    break;
                 } else if (compareToResponse < 0) {
                     /*
                     Moving to the left node
@@ -103,6 +98,13 @@ class kdTree implements Searchable, TreeDebug {
 
     @Override
     public boolean find(Point point) {
+        boolean result = true;
+        if (point == null || point.dimension() == 0) {  // Basic sanity check.
+            result = false;
+        } else {
+
+        }
+
         return false;
     }
 
