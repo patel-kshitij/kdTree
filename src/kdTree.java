@@ -268,7 +268,7 @@ class kdTree implements Searchable, TreeDebug {
 
             if (root != null) {
 
-
+                // Checking if root is in range or not. If no then check whether to go to the left node or  the right node.
                 if (root.point.isInRange(minPoint, maxPoint)) {
                     result.add(root.point);
                     if (root.left != null) {
@@ -289,6 +289,7 @@ class kdTree implements Searchable, TreeDebug {
                 currentDepthOfTree++;
             }
 
+            // Traversing the tree.
             for (int i = 2; ; i = nodes.length * 2) {
                 nextNodes = new Node[i * 2];
                 nodesRemaining = false;
@@ -299,6 +300,8 @@ class kdTree implements Searchable, TreeDebug {
                         if (currentNode.point.isInRange(minPoint, maxPoint)) {
                             result.add(currentNode.point);
                         }
+
+                        // Only taking the nodes that are useful to us. Leaving rest of the nodes as traversing them would be useless.
                         if (currentNode.left != null && currentNode.point.compareTo(minPoint, dimensionToCompare) > CompareToResponseForEqual) {
                             nextNodes[nextNodesIndex] = currentNode.left;
                             nodesRemaining = true;
@@ -385,11 +388,13 @@ class kdTree implements Searchable, TreeDebug {
         int rightHalfOfNodesIndex = 1;
 
         if (root != null) {
+            // Adding root node first and then checking for the remaining nodes.
             result.append(root.point.getCoordinatesString());
             result.append(currentDepthOfTree);
             result.append("\n");
             currentDepthOfTree++;
 
+            // Splitting the nodes and storing it.
             if (root.left != null) {
                 nodes[leftHalfOfNodesIndex] = root.left;
             }
@@ -397,7 +402,7 @@ class kdTree implements Searchable, TreeDebug {
                 nodes[rightHalfOfNodesIndex] = root.right;
             }
 
-
+            // Traversing the remaining nodes.
             for (int i = 2; ; i = nodes.length * 2) {
                 nextNodes = new Node[i * 2];
                 nodesRemaining = false;
