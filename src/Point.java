@@ -57,6 +57,10 @@ public class Point<T extends Comparable<T>> {
         return new ArrayList( coordinates );
     }
 
+    /**
+     * Get the coordinates in string format. <Coordinate1> <Coordinate2> ... <CoordinateN>
+     * @return A string of the coordinates.
+     */
     public String getCoordinatesString(){
         StringBuilder result= new StringBuilder();
 
