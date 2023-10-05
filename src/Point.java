@@ -68,7 +68,7 @@ public class Point<T extends Comparable<T>> {
     }
 
     /**
-     *
+     * Checks if the coordinates of the class is between the point 1 and point 2
      * @param point1 -- Point with the minimum coordinates.
      * @param point2 -- Ponts with the maximum coordinates.
      * @return True if the point lies inside the coordinates else false.

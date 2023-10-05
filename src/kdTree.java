@@ -345,6 +345,7 @@ class kdTree implements Searchable, TreeDebug {
 
         for (int i = 0; i < coordinatesOfPoint1.size(); i++) {
             if (point1.compareTo(point2, i) < CompareToResponseForEqual) {
+                // The coordinates are in proper end so keep it in the same place.
                 minCoordinates.add(coordinatesOfPoint1.get(i));
                 maxCoordinates.add(coordinatesOfPoint2.get(i));
             } else {
