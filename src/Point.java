@@ -56,4 +56,33 @@ public class Point<T extends Comparable<T>> {
     public List<T> getCoordinates() {
         return new ArrayList( coordinates );
     }
+
+    public String getCoordinatesString(){
+        StringBuilder result= new StringBuilder();
+
+        for (int i=0; i<coordinates.size(); i++){
+            result.append(coordinates.get(i));
+            result.append(" ");
+        }
+        return result.toString();
+    }
+
+    /**
+     *
+     * @param point1 -- Point with the minimum coordinates.
+     * @param point2 -- Ponts with the maximum coordinates.
+     * @return True if the point lies inside the coordinates else false.
+     */
+    public boolean isInRange(Point point1, Point point2) {
+
+        Boolean result = true;
+        for (int i = 0; i < coordinates.size(); i++) {
+            if (this.compareTo(point1, i) < 0 || this.compareTo(point2, i) > 0 ){
+                result = false;
+                break;
+            }
+        }
+
+        return result;
+    }
 }

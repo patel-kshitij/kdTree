@@ -5,29 +5,33 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AddTest {
+public class FindTest {
 
     private static final int TestDimension = 2;
-
+    
     @Test
-    void parameterCheck() {
+    void parameterCheck(){
+        kdTree tree = new kdTree(TestDimension);;
 
-        kdTree tree = new kdTree(TestDimension );
-
-        assertFalse(tree.add(null), "Null point");
-        assertFalse(tree.add(new Point<>(new ArrayList<Integer>())), "Empty point");
-
+        assertFalse(tree.find(null), "Null point");
+        assertFalse(tree.find(new Point<>(new ArrayList<Integer>())), "0 dimension point");
     }
 
     @Test
-    void addOnePoint() {
-        kdTree tree = new kdTree(TestDimension );
-        assertTrue(tree.add(new Point(new ArrayList<>(Arrays.asList("1", "2")))));
+    void onlyOneElementCheck(){
+        kdTree tree = new kdTree(TestDimension);;
+
+        tree.add(new Point(new ArrayList<>(Arrays.asList("1", "15"))));
+
+        assertTrue(tree.find(new Point(new ArrayList<>(Arrays.asList("1", "15")))), "Point present");
+        assertFalse(tree.find(new Point(new ArrayList<>(Arrays.asList("1", "25")))), "Point not present");
     }
 
     @Test
-    void addMultiplePoints(){
-        kdTree tree = new kdTree(TestDimension );
+    void multiplePointsCheck(){
+
+        kdTree tree = new kdTree(TestDimension);
+
         assertTrue(tree.add(new Point(new ArrayList<>(Arrays.asList("1", "15")))));
         assertTrue(tree.add(new Point(new ArrayList<>(Arrays.asList("2", "10")))));
         assertTrue(tree.add(new Point(new ArrayList<>(Arrays.asList("3", "4")))));
@@ -44,5 +48,8 @@ class AddTest {
         assertTrue(tree.add(new Point(new ArrayList<>(Arrays.asList("14", "12")))));
         assertTrue(tree.add(new Point(new ArrayList<>(Arrays.asList("15", "3")))));
 
-    }
+        assertTrue(tree.find(new Point(new ArrayList<>(Arrays.asList("11", "14")))));
+        assertFalse(tree.find(new Point(new ArrayList<>(Arrays.asList("11", "13")))));
+
+        }
 }
