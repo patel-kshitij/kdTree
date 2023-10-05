@@ -55,6 +55,8 @@ class kdTree implements Searchable, TreeDebug {
             dimensionToCompare++;
 
             for (int i = 2; ; i = i * 2) {
+
+                // Creating the nextSplitPoint, and it will be twice the size of the total number of parents.
                 nextSplitPoints = new Point[i * 2][];
                 nextSplitIndex = 0;
 
@@ -217,11 +219,23 @@ class kdTree implements Searchable, TreeDebug {
         return result;
     }
 
+    /**
+     *  Returns the size of the tree.
+     * @return -- size of the tree.
+     */
     @Override
     public int size() {
         return sizeOfTheTree;
     }
 
+    /**
+     * Returns the list of all points currently stored in the tree that appear inside the rectangle whose diagonal is defined by minCorner to maxCorner.
+     * All points returned will be greater in all coordinates than minCorner and will be smaller in all coordinates than maxCorner.
+     * The method returns null in the case of an error.
+     * @param minCorner -- Lower end of the range.
+     * @param maxCorner -- Higher end of the range.
+     * @return -- The list of all points inside the range
+     */
     @Override
     public Set<Point> findInRange(Point minCorner, Point maxCorner) {
 
@@ -312,6 +326,12 @@ class kdTree implements Searchable, TreeDebug {
     }
 
 
+    /**
+     * This method is used when some coordinates of lower end of range is greater than higher end. It provides
+     * @param point1 -- Lower range
+     * @param point2 -- Upper range
+     * @return And array of size 2 with 0th element as proper lower range and 1st element as proper upper range
+     */
     private Point[] getMinMaxPoints(Point point1, Point point2) {
         List coordinatesOfPoint1 = new ArrayList<>(point1.getCoordinates());
         List coordinatesOfPoint2 = new ArrayList<>(point2.getCoordinates());
@@ -319,7 +339,9 @@ class kdTree implements Searchable, TreeDebug {
         List minCoordinates = new ArrayList();
         List maxCoordinates = new ArrayList();
 
-        Point[] result = new Point[2];
+        int resultArraySize = 2;
+
+        Point[] result = new Point[resultArraySize];
 
         for (int i = 0; i < coordinatesOfPoint1.size(); i++) {
             if (point1.compareTo(point2, i) < CompareToResponseForEqual) {
