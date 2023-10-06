@@ -6,5 +6,4 @@ public interface  Searchable {
     public boolean find( Point point );
     public int size();
     public Set<Point> findInRange( Point minCorner, Point maxCorner );
-
 }
