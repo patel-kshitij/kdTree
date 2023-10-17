@@ -89,4 +89,17 @@ public class Point<T extends Comparable<T>> {
 
         return result;
     }
+
+    /**
+     * Return a string representation of one particular dimension of this point.
+     * @param dimension the dimension of the point to return
+     * @return  the string version of the coordinate value.  Return an empty if the dimension isn't valid.
+     */
+    public String getCoordinateString( int dimension ) {
+        if ((dimension >= 0) && (dimension < coordinates.size()) ) {
+            return coordinates.get(dimension).toString();
+        }
+        return "";
+    }
+
 }

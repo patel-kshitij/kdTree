@@ -39,8 +39,10 @@ class kdTree implements Searchable, TreeDebug {
         Point[][] nextSplitPoints; // The array of split points
         Point[][] sortAndSplitResponse; // The response provided by calling sortAndSplitArray();
 
-        if (points == null || points.isEmpty()) { // Sanity check
+        if (points == null) { // Sanity check
             result = false;
+        } else if (points.isEmpty()){
+            result = true;
         } else {
 
             Point[] pointsArray = points.toArray(new Point[0]); // Creating an array of points as a constraint not to use data-structure from collections.
@@ -472,13 +474,15 @@ class kdTree implements Searchable, TreeDebug {
         for (int i = 0; i < pointArraysLength - 1; i++) {
             swapped = false;
             for (int j = 0; j < pointArraysLength - i - 1; j++) {
-                compareToResponse = pointsArray[j].compareTo(pointsArray[j + 1], dimension);
+                if(pointsArray[j]!=null){
+                    compareToResponse = pointsArray[j].compareTo(pointsArray[j + 1], dimension);
 
-                if (compareToResponse > CompareToResponseForEqual) {
-                    temp = new Point<>(pointsArray[j]);
-                    pointsArray[j] = new Point<>(pointsArray[j + 1]);
-                    pointsArray[j + 1] = new Point<>(temp);
-                    swapped = true;
+                    if (compareToResponse > CompareToResponseForEqual) {
+                        temp = new Point<>(pointsArray[j]);
+                        pointsArray[j] = new Point<>(pointsArray[j + 1]);
+                        pointsArray[j + 1] = new Point<>(temp);
+                        swapped = true;
+                    }
                 }
             }
             if (!swapped) {

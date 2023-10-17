@@ -1,92 +1,100 @@
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class sizeTest {
-
+class sizeTest {
     private static final int TestDimension = 2;
-    
-    @Test
-    void multiplePointsBuildCheck2() {
-        kdTree tree = new kdTree(TestDimension);;
-        Set<Point> points = new HashSet<>();
-        points.add(new Point(new ArrayList<>(Arrays.asList(1, 10))));
-        points.add(new Point(new ArrayList<>(Arrays.asList(2, 9))));
-        points.add(new Point(new ArrayList<>(Arrays.asList(3, 8))));
-        points.add(new Point(new ArrayList<>(Arrays.asList(4, 7))));
-        points.add(new Point(new ArrayList<>(Arrays.asList(5, 6))));
-        points.add(new Point(new ArrayList<>(Arrays.asList(6, 5))));
-        points.add(new Point(new ArrayList<>(Arrays.asList(7, 4))));
-        points.add(new Point(new ArrayList<>(Arrays.asList(8, 3))));
-        points.add(new Point(new ArrayList<>(Arrays.asList(9, 2))));
-        points.add(new Point(new ArrayList<>(Arrays.asList(10, 1))));
-        points.add(new Point(new ArrayList<>(Arrays.asList(11, 0))));
 
-        assertTrue(tree.build(points));
-        assertEquals(tree.sizeOfTheTree,11);
+    @Test
+    void nullSetTest() {
+        kdTree tree = new kdTree(TestDimension );
+
+        assertEquals(0, tree.size( ), "size with empty tree" );
     }
 
     @Test
-    void multiplePointsBuildCheck1() {
-        kdTree tree = new kdTree(TestDimension);;
-        Set<Point> points = new HashSet<>();
-        points.add(new Point(new ArrayList<>(Arrays.asList(1, 10))));
-        points.add(new Point(new ArrayList<>(Arrays.asList(2, 9))));
-        points.add(new Point(new ArrayList<>(Arrays.asList(3, 8))));
-        points.add(new Point(new ArrayList<>(Arrays.asList(4, 7))));
-        points.add(new Point(new ArrayList<>(Arrays.asList(5, 6))));
-        points.add(new Point(new ArrayList<>(Arrays.asList(6, 5))));
-        points.add(new Point(new ArrayList<>(Arrays.asList(7, 4))));
-        points.add(new Point(new ArrayList<>(Arrays.asList(8, 3))));
-        points.add(new Point(new ArrayList<>(Arrays.asList(9, 2))));
-        points.add(new Point(new ArrayList<>(Arrays.asList(10, 1))));
-        points.add(new Point(new ArrayList<>(Arrays.asList(11, 0))));
+    void singleNodeTree() {
+        TreeDebug tree = new kdTree( TestDimension );
+        List<Point> treePoints = new ArrayList<>();
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(0, 0)) ) );
 
-        assertTrue(tree.build(points));
-
-        Set<Point> points1 = new HashSet<>();
-        points1.add(new Point(new ArrayList<>(Arrays.asList(1, 10))));
-        points1.add(new Point(new ArrayList<>(Arrays.asList(2, 9))));
-        points1.add(new Point(new ArrayList<>(Arrays.asList(3, 8))));
-        points1.add(new Point(new ArrayList<>(Arrays.asList(4, 7))));
-        points1.add(new Point(new ArrayList<>(Arrays.asList(5, 6))));
-        points1.add(new Point(new ArrayList<>(Arrays.asList(6, 5))));
-        points1.add(new Point(new ArrayList<>(Arrays.asList(7, 4))));
-        points1.add(new Point(new ArrayList<>(Arrays.asList(8, 3))));
-        points1.add(new Point(new ArrayList<>(Arrays.asList(9, 2))));
-        points1.add(new Point(new ArrayList<>(Arrays.asList(10, 1))));
-        points1.add(new Point(new ArrayList<>(Arrays.asList(11, 0))));
-
-        assertTrue(tree.build(points1));
-
-        assertEquals(tree.sizeOfTheTree, 11);
+        for (int i = 0; i < treePoints.size(); i++) {
+            assertTrue(tree.add(treePoints.get(i)), "adding to the tree: " + i);
+        }
+        assertEquals(treePoints.size(), tree.size( ), "size with just one value in the tree" );
     }
 
     @Test
-    void addMultiplePoints(){
-        kdTree tree = new kdTree(TestDimension);;
-        assertTrue(tree.add(new Point(new ArrayList<>(Arrays.asList("1", "15")))));
-        assertTrue(tree.add(new Point(new ArrayList<>(Arrays.asList("2", "10")))));
-        assertTrue(tree.add(new Point(new ArrayList<>(Arrays.asList("3", "4")))));
-        assertTrue(tree.add(new Point(new ArrayList<>(Arrays.asList("4", "2")))));
-        assertTrue(tree.add(new Point(new ArrayList<>(Arrays.asList("5", "6")))));
-        assertTrue(tree.add(new Point(new ArrayList<>(Arrays.asList("6", "13")))));
-        assertTrue(tree.add(new Point(new ArrayList<>(Arrays.asList("7", "1")))));
-        assertTrue(tree.add(new Point(new ArrayList<>(Arrays.asList("8", "8")))));
-        assertTrue(tree.add(new Point(new ArrayList<>(Arrays.asList("9", "7")))));
-        assertTrue(tree.add(new Point(new ArrayList<>(Arrays.asList("10", "11")))));
-        assertTrue(tree.add(new Point(new ArrayList<>(Arrays.asList("11", "14")))));
-        assertTrue(tree.add(new Point(new ArrayList<>(Arrays.asList("12", "9")))));
-        assertTrue(tree.add(new Point(new ArrayList<>(Arrays.asList("13", "5")))));
-        assertTrue(tree.add(new Point(new ArrayList<>(Arrays.asList("14", "12")))));
-        assertTrue(tree.add(new Point(new ArrayList<>(Arrays.asList("15", "3")))));
+    void balancedTree() {
+        TreeDebug tree = new kdTree( TestDimension );
+        List<Point> treePoints = new ArrayList<>();
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(8, 8)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(5, 6)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(12, 9)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(4, 2)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(2, 10)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(13, 5)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(11, 14)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(3, 4)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(7, 1)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(1, 15)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(6, 13)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(9, 7)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(15, 3)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(10, 11)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(14, 12)) ) );
 
-        assertEquals(15, tree.size());
-
+        for (int i = 0; i < treePoints.size(); i++) {
+            assertTrue(tree.add(treePoints.get(i)), "adding to the tree: " + i);
+        }
+        assertEquals(treePoints.size(), tree.size( ), "balanced tree size" );
     }
+
+    @Test
+    void linkedListTree() {
+        TreeDebug tree = new kdTree( TestDimension );
+        List<Point> treePoints = new ArrayList<>();
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(8, 8)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(12, 9)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(11, 14)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(10, 11)) ) );
+
+        for (int i = 0; i < treePoints.size(); i++) {
+            assertTrue(tree.add(treePoints.get(i)), "adding to the tree: " + i);
+        }
+        assertEquals(treePoints.size(), tree.size( ), "linked list tree size" );
+    }
+
+    @Test
+    void sizeBuildTree() {
+        TreeDebug tree = new kdTree( TestDimension );
+        Set<Point> treePoints = new HashSet<>();
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(8, 8)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(5, 6)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(12, 9)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(13, 5)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(6, 13)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(10, 11)) ) );
+
+        assertTrue(tree.build(treePoints), "building the tree");
+        assertEquals(treePoints.size(), tree.size( ), "tree size build by build()" );
+    }
+
+    @Test
+    void sizeAddAndBuildTree() {
+        TreeDebug tree = new kdTree( TestDimension );
+        Set<Point> treePoints = new HashSet<>();
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(8, 8)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(5, 6)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(13, 5)) ) );
+
+        assertTrue(tree.build(treePoints), "building the tree");
+        Point newPoint = new Point( new ArrayList<>(Arrays.asList(9, 7)) );
+        assertTrue(tree.add(newPoint), "add a new point to the tree");
+
+        assertEquals(treePoints.size()+1, tree.size( ), "tree size built by build() and add()" );
+    }
+
 }

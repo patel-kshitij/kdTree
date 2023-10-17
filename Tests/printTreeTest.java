@@ -1,17 +1,24 @@
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PrintTreeTest {
+class printTreeTest {
     private static final int TestDimension = 2;
 
     @Test
-    void exampleFromAssignment() {
+    void emtpyTreeTest() {
         TreeDebug tree = new kdTree(TestDimension );
+
+        assertEquals( "", tree.printTree( ), "printEmptyTree" );
+    }
+
+    @Test
+    void exampleFromAssignment() {
+        TreeDebug tree = new kdTree( TestDimension );
         List<Point> treePoints = new ArrayList<>();
         treePoints.add( new Point( new ArrayList<>(Arrays.asList(8, 8)) ) );
         treePoints.add( new Point( new ArrayList<>(Arrays.asList(5, 6)) ) );
@@ -36,16 +43,58 @@ class PrintTreeTest {
     }
 
     @Test
-    void singlePointPrint() {
-        TreeDebug tree = new kdTree(TestDimension );
+    void singleNodePrint() {
+        TreeDebug tree = new kdTree( TestDimension );
         List<Point> treePoints = new ArrayList<>();
         treePoints.add( new Point( new ArrayList<>(Arrays.asList(8, 8)) ) );
 
         for (int i = 0; i < treePoints.size(); i++) {
             assertTrue(tree.add(treePoints.get(i)), "adding to the tree: " + i);
         }
-        assertEquals( "8 8 1\n", tree.printTree( ), "print the single point tree." );
+        assertEquals( "8 8 1\n", tree.printTree( ), "print a tree with just the root" );
     }
+
+    @Test
+    void rootAndLeftChild() {
+        TreeDebug tree = new kdTree( TestDimension );
+        List<Point> treePoints = new ArrayList<>();
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(8, 8)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(5, 6)) ) );
+
+        for (int i = 0; i < treePoints.size(); i++) {
+            assertTrue(tree.add(treePoints.get(i)), "adding to the tree: " + i);
+        }
+        assertEquals( "8 8 1\n5 6 2\n", tree.printTree( ), "print the root and left child" );
+    }
+
+    @Test
+    void rootAndRightChild() {
+        TreeDebug tree = new kdTree( TestDimension );
+        List<Point> treePoints = new ArrayList<>();
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(8, 8)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(12, 9)) ) );
+
+        for (int i = 0; i < treePoints.size(); i++) {
+            assertTrue(tree.add(treePoints.get(i)), "adding to the tree: " + i);
+        }
+        assertEquals( "8 8 1\n12 9 2\n", tree.printTree( ), "print the root and right child" );
+    }
+
+    @Test
+    void missingNodesAtLowerLevel() {
+        TreeDebug tree = new kdTree( TestDimension );
+        List<Point> treePoints = new ArrayList<>();
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(8, 8)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(5, 6)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(12, 9)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(4, 2)) ) );
+        treePoints.add( new Point( new ArrayList<>(Arrays.asList(11, 14)) ) );
+
+        for (int i = 0; i < treePoints.size(); i++) {
+            assertTrue(tree.add(treePoints.get(i)), "adding to the tree: " + i);
+        }
+        assertEquals( "8 8 1\n5 6 2\n12 9 2\n4 2 3\n11 14 3\n", tree.printTree( ), "three levels, but missing inside children on one level" );
+    }
+
+
 }
-
-
